@@ -1,0 +1,60 @@
+# 01 — Environment Setup
+
+
+Creates the Snowflake environment required for the project, including the database, schemas, warehouse, file format, internal stage and raw tables.
+
+02 — Raw Data Ingestion
+
+02_raw_ingestion.sql
+
+Loads monthly NYC taxi data into the raw layer using Snowflake COPY INTO.
+
+Source-file metadata and load timestamps are retained to provide visibility into where each record originated and when it entered the pipeline.
+
+The monthly files are loaded in batches so that ingestion can be tracked at source level.
+
+03 — Data Quality Assessment
+
+03_data_quality.sql
+
+Profiles the raw dataset before transformation and identifies records that violate expected temporal, geographic or financial rules.
+
+Checks include invalid dates, distances, trip durations, location IDs and monetary values.
+
+This stage provides visibility into the condition of the source data before it reaches downstream analytics.
+
+04 — Staging Transformations
+
+04_staging_transformations.sql
+
+Transforms raw taxi records into a structured staging dataset.
+
+Instead of deleting problematic records, the staging layer adds explicit quality flags and assigns each record an overall QUALITY_STATUS.
+
+This preserves the original data for traceability while creating a controlled point from which validated records can move into the analytics layer.
+
+05 — Dimensional Model
+
+05_dimensional_model.sql
+
+Builds an analytics-ready star schema.
+
+The central FACT_TRIPS table contains validated trip records, while supporting dimensions provide descriptive context for dates, locations and payment methods.
+
+Using a dimensional model simplifies downstream analysis and reduces repeated transformation logic.
+
+06 — Analysis
+
+06_analysis.sql
+
+Uses the analytical model to answer business and operational questions around taxi activity.
+
+The analysis focuses on:
+
+Trip volume by borough
+
+Airport versus non-airport journeys
+
+Monthly trip value and distance
+
+Data quality trends across source batches
