@@ -2,7 +2,10 @@
 -- DATA ANALYTICS INSIGHTS
 -- ============================================================================================================
 
--- BOROUGH TRIPS VOLUME--
+-- BOROUGH TRIPS VOLUME:-- 
+-- This analysis examines where taxi journeys originate and identifies differences in trip activity 
+-- across NYC boroughs.
+
 SELECT
     Z.BOROUGH,
     COUNT(*) AS TRIP_COUNT
@@ -13,7 +16,10 @@ GROUP BY Z.BOROUGH
 ORDER BY TRIP_COUNT DESC;
 
 
--- AIRPORT AND NON-AIRPORT TRIPS COMPARISON --
+-- AIRPORT AND NON-AIRPORT TRIPS COMPARISON:-- 
+-- Airport journeys are compared with other trips to understand differences in trip value 
+-- and travel behaviour.
+
 SELECT
     CASE
         WHEN Z.ZONE IN (
@@ -36,9 +42,9 @@ JOIN NYC_TAXI_DB.ANALYTICS.DIM_ZONE Z
 GROUP BY TRIP_TYPE
 ORDER BY AVG_TRIP_VALUE DESC;
 
-
--- MONTHLY TRIP VALUE --
--- MONTHLY TRIP VALUE --
+-- MONTHLY TRIP PERFORMANCE: --
+-- Trip value and distance are analysed over time using the date dimension 
+-- rather than relying on source filenames.
 SELECT
     D.YEAR,
     D.MONTH_NUMBER,
