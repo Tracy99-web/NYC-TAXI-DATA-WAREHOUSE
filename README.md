@@ -96,7 +96,7 @@ This stage provides visibility into the condition of the source data before it r
 
 Transforms raw taxi records into a structured staging dataset.
 
-Instead of deleting problematic records, the staging layer adds explicit quality flags and assigns each record an overall `QUALITY_STATUS`.
+The staging layer adds explicit quality flags and assigns each record an overall `QUALITY_STATUS`.
 
 This preserves the original data for traceability while creating a controlled point from which validated records can move into the analytics layer.
 
@@ -106,7 +106,7 @@ This preserves the original data for traceability while creating a controlled po
 
 `05_dimensional_model.sql`
 
-Builds an analytics-ready star schema.
+Builds an star schema that is ready for analytics.
 
 The central `FACT_TRIPS` table contains validated trip records, while supporting dimensions provide descriptive context for dates, locations and payment methods.
 
